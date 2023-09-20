@@ -28,7 +28,21 @@ export default class WebSessionConcept {
     // Hint: Take a look at how the "end" function makes sure the user is logged in. Keep in mind that a
     // synchronization like starting a session should just consist of a series of actions that may throw
     // exceptions and should not have its own control flow.
-    session.user = username;
+    
+    // if session.user exists, throw error
+    if (session.user) {
+      // console.log("user logged in", username);
+      throw new UnauthenticatedError("User already logged in!");
+    } else {
+      // test if username is empty
+      if (username === "") {
+        throw new UnauthenticatedError("Username can't be empty");
+      } else {
+        // console.log("user not logged in, assign user session, username =", username);
+        // if everything ok. assign username to session
+        session.user = username;
+      }
+    }
   }
 
   getUser(session: WebSessionDoc) {
